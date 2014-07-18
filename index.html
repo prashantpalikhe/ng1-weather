@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="">
+<html lang="en" ng-app="weatherapp">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,7 +20,7 @@
         <script src="js/ngAutocomplete.js"></script>
         <script src="js/weather.js"></script>
     </head>
-    <body ng-app="myapp" ng-controller="WeatherController" ng-attr-class="{{ data.period }}">
+    <body ng-controller="WeatherController" ng-attr-class="{{ data.period }}">
         <div class="weather container">
             <div class="units">
                 <a href="#" ng-click="toC()" ng-class="{active: units=='metric'}">C</a> | <a href="#" ng-click="toF()" ng-class="{active: units=='imperial'}">F</a>
@@ -33,10 +33,6 @@
             </form>
 
             <br>
-
-            <p class="text-center"ng-show="showloader">
-                <img src="images/loader.svg" width="256" height="32">
-            </p>
 
             <div class="weather-info">
                 <p ng-show="data.weather">

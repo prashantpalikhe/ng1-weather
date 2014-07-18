@@ -1,4 +1,4 @@
-var app = angular.module('myapp', ['ngAutocomplete']);
+var app = angular.module('weatherapp', ['ngAutocomplete']);
 
 /**
  * CONTROLLERS
@@ -35,7 +35,6 @@ app.controller('WeatherController', function ($scope, $http) {
     };
 
     $scope.fetchWeather = function (city) {
-        $scope.showloader = true;
         var url = WEATHER_API + city + '&units=' + $scope.units;
 
         $http
@@ -59,7 +58,6 @@ app.controller('WeatherController', function ($scope, $http) {
         $http
             .get(url)
             .success(function (data) {
-                $scope.showloader = false;
                 if (data.cnt) {
                     $scope.data.forecasts = data.list;
                 }
