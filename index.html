@@ -1,0 +1,63 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Place favicon.ico and apple-touch-icon(s) in the root directory -->
+
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/icons.css">
+
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.js"></script>
+        <script src="js/moment.js"></script>
+        <script src="js/ngAutocomplete.js"></script>
+        <script src="js/weather.js"></script>
+    </head>
+    <body ng-app="myapp">
+        <div class="weather container">
+            <div ng-controller="WeatherController">
+                <div class="units">
+                    <a href="#" ng-click="toC()" ng-class="{active: data.units=='metric'}">C</a> | <a href="#" ng-click="toF()" ng-class="{active: data.units=='imperial'}">F</a>
+                </div>
+
+                <form ng-submit="fetchData()">
+                    <input class="city" type="text" placeholder="Type your city and press Enter" required ng-autocomplete="data.city" options="data.options" details="data.details" autofocus>
+                    <!-- <button class="go" ng-click="fetchData()">GO</button> -->
+                </form>
+
+                <br>
+
+                <div class="weather-info">
+                    <p ng-show="data.weather">
+                        <span><em>{{ data.weather.temp | number:0 }}</em></span>
+                        <span><strong>H</strong> {{ data.weather.temp_max | number:0 }}</span>
+                        <span><strong>L</strong> {{ data.weather.temp_min | number:0 }}</span>
+
+                        <em><i class="pull-right wi {{ data.weather[0].icon }}"></i></em>
+                    </p>
+
+                    <ul class="weather-forecast" ng-show"data.forecasts">
+                        <li ng-repeat="forecast in data.forecasts">
+                            <p>{{ (forecast.dt * 1000) | date:"EEEE" }}</p>
+                            <p><em>{{ forecast.temp.day | number:0 }}</em></p>
+                            <span><strong>H</strong> {{ forecast.temp.max | number:0 }}</span>
+                            <span><strong>L</strong> {{ forecast.temp.min | number:0 }}</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="weather-error" ng-show="data.error">
+                    <div class="alert alert-danger">
+                        {{ data.error }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
