@@ -4,6 +4,20 @@ html {
 
 body {
     background: #00bd9c;
+
+    -webkit-transition: background 0.25s ease;
+    -moz-transition: background 0.25s ease;
+    -ms-transition: background 0.25s ease;
+    -o-transition: background 0.25s ease;
+    transition: background 0.25s ease;
+}
+
+body.day {
+    background: #f2c500;
+}
+
+body.night {
+    background: #33485f;
 }
 
 .weather {
@@ -57,8 +71,12 @@ body {
     user-select: none;
     background-image: none;
     color: #fff;
+        -webkit-transition: background 0.25s ease;
+    -moz-transition: background 0.25s ease;
+    -ms-transition: background 0.25s ease;
+    -o-transition: background 0.25s ease;
+    transition: background 0.25s ease;
 }
-
 
 .weather-info {
     margin-top: 50px;
@@ -70,6 +88,13 @@ em {
     font-size: 200px;
     color: #fff;
     font-style: normal;
+}
+
+.weather-info.ng-hide {
+    -webkit-animation: fadeOut 1s;
+    -moz-animation: fadeOut 1s;
+    -ms-animation: fadeOut 1s;
+    animation: fadeOut 1s;
 }
 
 .weather-forecast {
@@ -97,8 +122,24 @@ em {
     background: #00a185;
     color: #fff;
     text-align: center;
+
+
+    -webkit-transition: background 1s ease;
+    -moz-transition: background 1s ease;
+    -ms-transition: background 1s ease;
+    -o-transition: background 1s ease;
+    transition: background 1s ease;
 }
 
+.day .go,
+.day .weather-forecast li {
+    background: #f59d00;
+}
+
+.night .go,
+.night .weather-forecast li {
+    background: #2b3e51;
+}
 .weather-forecast em {
     font-size: 30px;
 }

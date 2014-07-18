@@ -40,7 +40,6 @@
 .wi-day-cloudy-gusts:before {
   content: "\f000";
 }
-.02d:before,
 .wi-day-cloudy-windy:before {
   content: "\f001";
 }
@@ -62,7 +61,6 @@
 .wi-day-rain-wind:before {
   content: "\f007";
 }
-.10d:before,
 .wi-day-rain:before {
   content: "\f008";
 }
@@ -78,7 +76,6 @@
 .wi-day-sunny-overcast:before {
   content: "\f00c";
 }
-.01d:before,
 .wi-day-sunny:before {
   content: "\f00d";
 }
@@ -94,12 +91,9 @@
 .wi-cloudy-windy:before {
   content: "\f012";
 }
-.03d:before,
-.04d:before,
 .wi-cloudy:before {
   content: "\f013";
 }
-.50d:before,
 .wi-fog:before {
   content: "\f014";
 }
@@ -118,11 +112,9 @@
 .wi-rain:before {
   content: "\f019";
 }
-.09d:before,
 .wi-showers:before {
   content: "\f01a";
 }
-.13d:before,
 .wi-snow:before {
   content: "\f01b";
 }
@@ -132,7 +124,6 @@
 .wi-storm-showers:before {
   content: "\f01d";
 }
-.11d:before,
 .wi-thunderstorm:before {
   content: "\f01e";
 }
