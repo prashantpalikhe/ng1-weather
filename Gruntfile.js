@@ -30,7 +30,7 @@ module.exports = function(grunt) {
             },
             css: {
                 files: ['sass/**/*.scss'],
-                tasks: ['compass', 'cssmin'],
+                tasks: ['compass', 'autoprefixer', 'cssmin'],
                 options: {
                     spawn: false
                 }
@@ -70,6 +70,16 @@ module.exports = function(grunt) {
                     httpPath: '/'
                 }
             }
+        },
+
+        autoprefixer: {
+            options: {
+                browsers: ['last 2 version']
+            },
+            single_file: {
+                src: 'release/main.css',
+                dest: 'release/main.css'
+            },
         },
 
         cssmin: {

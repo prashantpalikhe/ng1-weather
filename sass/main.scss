@@ -1,27 +1,23 @@
-html {
-    -webkit-font-smoothing: antialiased;
-}
+$primaryColor: #00bd9c;
+
+$dayColor: #f2c500;
+$nightColor: #33485f;
 
 body {
-    background: #00bd9c;
+    background: $primaryColor;
+    transition: background 0.2s ease;
 
-    -webkit-transition: background 0.25s ease;
-    -moz-transition: background 0.25s ease;
-    -ms-transition: background 0.25s ease;
-    -o-transition: background 0.25s ease;
-    transition: background 0.25s ease;
-}
+    &.day {
+        background: $dayColor;
+    }
 
-body.day {
-    background: #f2c500;
-}
-
-body.night {
-    background: #33485f;
+    &.night {
+        background: $nightColor;
+    }
 }
 
 .weather {
-    margin-top: 100px;
+    margin-top: 20px;
 }
 
 .units {
@@ -50,39 +46,13 @@ body.night {
     border: 0;
 }
 
-.go {
-    background:  #00a185;
-    border: none;
-    outline: none;
-    width: 100%;
-    display: inline-block;
-    padding: 6px 12px;
-    margin-bottom: 0;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 1.42857143;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    background-image: none;
-    color: #fff;
-        -webkit-transition: background 0.25s ease;
-    -moz-transition: background 0.25s ease;
-    -ms-transition: background 0.25s ease;
-    -o-transition: background 0.25s ease;
-    transition: background 0.25s ease;
-}
-
 .weather-info {
-    margin-top: 50px;
     color: #fff;
 }
 
+.weather-icon {
+    width: 250px;
+}
 
 em {
     font-size: 200px;
@@ -90,58 +60,28 @@ em {
     font-style: normal;
 }
 
-.weather-info.ng-hide {
-    -webkit-animation: fadeOut 1s;
-    -moz-animation: fadeOut 1s;
-    -ms-animation: fadeOut 1s;
-    animation: fadeOut 1s;
-}
-
 .weather-forecast {
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    -ms-flex-wrap: wrap;
-    -webkit-flex-wrap: wrap;
-    flex-wrap: wrap;
-    -ms-flex-pack: justify;
-    -webkit-justify-content: space-between;
-    justify-content: space-between;
     text-align: center;
     list-style: none;
     margin: 50px 0 0;
     padding: 0;
 }
 
-.weather-forecast li {
-    -ms-flex: 1 0 140px;
-    -webkit-flex: 1 0 140px;
-    flex: 1 0 140px;
-    margin: 0 0 20px 20px;
+.weather-forecast > div {
     padding: 20px;
     background: #00a185;
     color: #fff;
     text-align: center;
 
+    .day & {
+        background: #f59d00;
+    }
 
-    -webkit-transition: background 1s ease;
-    -moz-transition: background 1s ease;
-    -ms-transition: background 1s ease;
-    -o-transition: background 1s ease;
-    transition: background 1s ease;
+    .night & {
+        background: #2b3e51;
+    }
 }
 
-.day .go,
-.day .weather-forecast li {
-    background: #f59d00;
-}
-
-.night .go,
-.night .weather-forecast li {
-    background: #2b3e51;
-}
 .weather-forecast em {
     font-size: 30px;
 }
-
-@import "_icons";
