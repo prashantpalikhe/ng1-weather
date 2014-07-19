@@ -11,14 +11,7 @@
 
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/animate.css/2.0/animate.min.css">
-        <link rel="stylesheet" href="css/main.css">
-        <link rel="stylesheet" href="css/icons.css">
-
-        <script src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
-        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
-
-        <script src="js/ngAutocomplete.js"></script>
-        <script src="js/weather.js"></script>
+        <link rel="stylesheet" href="release/main.css">
     </head>
     <body ng-controller="WeatherController" ng-attr-class="{{ data.period }}">
         <div class="weather container">
@@ -28,7 +21,6 @@
 
             <form ng-submit="fetchData()">
                 <input class="city" type="text" placeholder="Type your city and press Enter" ng-model="city" required autofocus>
-                <!-- <input class="city" type="text" placeholder="Type your city and press Enter" ng-model="city" ng-autocomplete="city" options="options" details="details" required autofocus> -->
                 <!-- <button class="go" ng-click="fetchData()">GO</button> -->
             </form>
 
@@ -59,5 +51,11 @@
                 </div>
             </div>
         </div>
+
+        <!-- <script src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script> -->
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
+
+        <script src="release/main.js"></script>
+        <script src="http://localhost:35729/livereload.js"></script>
     </body>
 </html>
