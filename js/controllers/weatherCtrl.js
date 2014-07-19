@@ -1,16 +1,23 @@
-app.controller('WeatherController', ["$scope", "$http", function ($scope, $http) {
+/**
+ * MUST use inline injection notation to prevent uglification breaking the app.
+ */
+app.controller('WeatherController', ["$scope", "$http", "$interval", "$location", function ($scope, $http, $interval, $location) {
         'use strict';
 
         var WEATHER_API  = 'http://api.openweathermap.org/data/2.5/weather?q=';
         var FORECAST_API = 'http://api.openweathermap.org/data/2.5/forecast/daily?count=7&q=';
 
         $scope.units   = "metric";
-        $scope.city    = "";
+        $scope.city    = $location.path().replace(/^\/|\/$/g, '');
         $scope.options = {types: '(cities)'};
         $scope.details = "";
         $scope.data    = {};
 
         $scope.resetData = function () {
+            if (angular.isDefined($scope.stop)) {
+                $interval.cancel($scope.stop);
+                $scope.stop = undefined;
+            }
             $scope.data.weather = $scope.data.forecasts = $scope.data.error = undefined;
             return $scope;
         };
@@ -22,7 +29,9 @@ app.controller('WeatherController', ["$scope", "$http", function ($scope, $http)
                 return;
             }
 
+            $location.path('/' + city);
             $scope.resetData().fetchWeather(city).fetchForecast(city);
+            // $scope.stop = $interval($scope.fetchData, 5000);
         };
 
         $scope.fetchWeather = function (city) {
@@ -34,8 +43,8 @@ app.controller('WeatherController', ["$scope", "$http", function ($scope, $http)
                     if (data.cod === "404") {
                         $scope.data.error = "No data found for " + $scope.city;
                     } else {
+                        $scope.data.weather = data;
                         $scope.data.period = (data.dt > data.sys.sunset || data.dt < data.sys.sunrise) ? "night" : "day";
-                        $scope.data.weather = data.main;
                         $scope.data.weather.icon = data.weather[0].icon;
                     }
                 });
@@ -67,4 +76,6 @@ app.controller('WeatherController', ["$scope", "$http", function ($scope, $http)
             $scope.units = "imperial";
             $scope.fetchData();
         };
+
+        $scope.fetchData();
     }]);

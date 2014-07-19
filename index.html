@@ -12,49 +12,68 @@
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="release/main.css">
     </head>
-    <body ng-controller="WeatherController" ng-attr-class="{{ data.period }}">
-        <div class="weather container">
-            <div class="units">
-                <a href="#" ng-click="toC()" ng-class="{active: units=='metric'}">C</a> | <a href="#" ng-click="toF()" ng-class="{active: units=='imperial'}">F</a>
-            </div>
+    <body>
+        <ng-view />
 
-            <form ng-submit="fetchData()">
-                <input class="city" type="text" placeholder="Type your city and press Enter" ng-model="city" required autofocus>
-                <!-- <button class="go" ng-click="fetchData()">GO</button> -->
-            </form>
+        <script type="text/ng-template" id="weatherapp-index.html">
+            <section ng-attr-class="weather-wrapper {{ data.period }}">
+                <div class="weather container">
+                    <div class="weather-meta row" ng-show="data.weather">
+                        <div class="col-xs-6 text-left">
+                            {{ data.weather.name}}, {{ data.weather.sys.country }}
+                        </div>
 
-            <div class="weather-info">
-                <div class="weather-today row" ng-show="data.weather">
-                    <div class="col-xs-6">
-                        <span><em>{{ data.weather.temp | number:0 }} <i class="wi wi-degrees"></i></em></span>
-                        <span><strong>H</strong> {{ data.weather.temp_max | number:0 }}</span>
-                        <span><strong>L</strong> {{ data.weather.temp_min | number:0 }}</span>
+                        <div class="col-xs-6 text-right">
+                            <a href="javascript:void(0)" ng-click="toC()" ng-class="{active: units=='metric'}">C</a> | <a href="javascript:void(0)" ng-click="toF()" ng-class="{active: units=='imperial'}">F</a>
+                        </div>
                     </div>
 
-                    <div class="col-xs-6">
-                        <img class="weather-icon pull-right" ng-if="data.weather.icon" ng-attr-src="images/{{ data.weather.icon | climacon }}.svg" alt="">
+                    <form ng-submit="fetchData()">
+                        <input class="city" type="text" placeholder="Which city are you in?" ng-model="city" required autofocus>
+                    </form>
+
+                    <div class="weather-info">
+                        <div class="weather-today row" ng-show="data.weather">
+                            <div class="col-xs-4">
+                                <p class="now">{{ data.weather.main.temp | number:0 }} <span class="deg">&deg;</span></p>
+                            </div>
+
+                            <div class="col-xs-4">
+                                <br><br><br>
+                                <p>
+                                    <span><strong>H</strong> {{ data.weather.main.temp_max | number:0 }}</span>
+                                    <span><strong>L</strong> {{ data.weather.main.temp_min | number:0 }}</span>
+                                </p>
+                                <p>Humidity: {{ data.weather.main.humidity }}%</p>
+                                <p>Wind: {{ data.weather.wind.speed }} m/s</p>
+                            </div>
+
+                            <div class="col-xs-4">
+                                <img class="weather-icon pull-right" ng-if="data.weather.icon" ng-attr-src="images/{{ data.weather.icon | climacon }}.svg" alt="">
+                            </div>
+                        </div>
+
+                        <div class="weather-forecast row">
+                            <div class="col-xs-2" ng-repeat="forecast in data.forecasts" ng-show="data.forecasts">
+                                <p>{{ (forecast.dt * 1000) | date:"EEEE" }}</p>
+                                <p><img ng-attr-src="images/{{ forecast.weather.0.icon | climacon }}.svg" width="64" height="64" alt="{{ forecast.weather.main }}" /></p>
+                                <span><strong>H</strong> {{ forecast.temp.max | number:0 }}</span>
+                                <span><strong>L</strong> {{ forecast.temp.min | number:0 }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="weather-error" ng-show="data.error">
+                        <div class="alert alert-danger">
+                            {{ data.error }}
+                        </div>
                     </div>
                 </div>
-
-                <div class="weather-forecast row">
-                    <div class="col-xs-2" ng-repeat="forecast in data.forecasts" ng-show="data.forecasts">
-                        <p>{{ (forecast.dt * 1000) | date:"EEEE" }}</p>
-                        <p><em>{{ forecast.temp.day | number:0 }}</em></p>
-                        <span><strong>H</strong> {{ forecast.temp.max | number:0 }}</span>
-                        <span><strong>L</strong> {{ forecast.temp.min | number:0 }}</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="weather-error" ng-show="data.error">
-                <div class="alert alert-danger">
-                    {{ data.error }}
-                </div>
-            </div>
-        </div>
+            </section>
+        </script>
 
         <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
-
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-route.js"></script>
         <script src="release/main.js"></script>
         <script src="http://localhost:35729/livereload.js"></script>
     </body>
