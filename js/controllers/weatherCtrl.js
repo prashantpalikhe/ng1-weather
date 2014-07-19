@@ -16,13 +16,7 @@ app.controller('WeatherController', ["$scope", "$http", function ($scope, $http)
         };
 
         $scope.fetchData = function () {
-            var comma = $scope.city.indexOf(',');
-
-            if (comma > 0) {
-                var city = $scope.city.substring(0, $scope.city.indexOf(','));
-            }  else {
-                var city = $scope.city;
-            }
+            var city = $scope.city;
 
             if (!city) {
                 return;
@@ -56,6 +50,7 @@ app.controller('WeatherController', ["$scope", "$http", function ($scope, $http)
                 .get(url)
                 .success(function (data) {
                     if (data.cnt) {
+                        data.list.shift();
                         $scope.data.forecasts = data.list;
                     }
                 });

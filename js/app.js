@@ -6,28 +6,28 @@
  * @type {angular.Module}
  */
 var app = angular.module('weatherapp', [])
-    .filter('beautifulicon', function () {
+    .filter('climacon', function () {
         'use strict';
 
         var iconMapping = {
-            "01d" : "wi-day-sunny" ,
-            "02d" : "wi-day-cloudy",
-            "03d" : "wi-cloudy",
-            "04d" : "wi-cloudy",
-            "09d" : "wi-showers",
-            "10d" : "wi-day-rain",
-            "11d" : "wi-thunderstorm",
-            "13d" : "wi-snow",
-            "50d" : "wi-fog",
-            "01n" : "wi-night-clear",
-            "02n" : "wi-night-cloudy",
-            "03n" : "wi-cloudy",
-            "04n" : "wi-cloudy",
-            "09n" : "wi-showers",
-            "10n" : "wi-night-rain",
-            "11n" : "wi-thunderstorm",
-            "13n" : "wi-snow",
-            "50n" : "wi-fog"
+            "01d" : "sun" ,
+            "02d" : "cloudSun",
+            "03d" : "cloud",
+            "04d" : "cloud",
+            "09d" : "cloudDrizzleSun",
+            "10d" : "cloudRainSun",
+            "11d" : "cloudLightning",
+            "13d" : "cloudSnow",
+            "50d" : "cloudFog",
+            "01n" : "moon",
+            "02n" : "cloudMoon",
+            "03n" : "cloud",
+            "04n" : "cloud",
+            "09n" : "cloudDrizzleMoon",
+            "10n" : "cloudRainMoon",
+            "11n" : "cloudLightning",
+            "13n" : "cloudSnow",
+            "50n" : "cloudFog"
         };
 
         return function (input) {
