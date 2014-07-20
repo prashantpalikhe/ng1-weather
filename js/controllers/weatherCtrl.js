@@ -28,15 +28,17 @@ angular.module('weatherapp')
         };
 
         $scope.fetchData = function () {
-            var by = "";
+            var by, param;
 
             if ($scope.coords) {
                 by = 'getByGeoCoords';
+                param = $scope.coords;
             }
 
             // Higher precedence for city, because city is user input.
             if ($scope.city) {
                 by = 'getByCityName';
+                param = $scope.city;
             }
 
             if (!by) {
@@ -45,7 +47,7 @@ angular.module('weatherapp')
 
             $scope.city && $location.path('/' + $scope.city);
 
-            weatherService[by]($scope.city, $scope.units).then($scope.setData);
+            weatherService[by](param, $scope.units).then($scope.setData);
         };
 
         $scope.toC = function () {
