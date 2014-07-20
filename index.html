@@ -18,9 +18,9 @@
         <script type="text/ng-template" id="weatherapp-index.html">
             <section ng-attr-class="weather-wrapper {{ data.period }}">
                 <div class="weather container">
-                    <div class="weather-meta row" ng-show="data.weather">
+                    <div class="weather-meta row" ng-show="data.today">
                         <div class="col-xs-6 text-left">
-                            {{ data.weather.name}}, {{ data.weather.sys.country }}
+                            {{ data.today.name}}, {{ data.today.sys.country }}
                         </div>
 
                         <div class="col-xs-6 text-right">
@@ -33,23 +33,23 @@
                     </form>
 
                     <div class="weather-info">
-                        <div class="weather-today row" ng-show="data.weather">
+                        <div class="weather-today row" ng-show="data.today">
                             <div class="col-xs-4">
-                                <p class="now">{{ data.weather.main.temp | number:0 }} <span class="deg">&deg;</span></p>
+                                <p class="now">{{ data.today.main.temp | number:0 }} <span class="deg">&deg;</span></p>
                             </div>
 
                             <div class="col-xs-4">
                                 <br><br><br>
                                 <p>
-                                    <span><strong>H</strong> {{ data.weather.main.temp_max | number:0 }}</span>
-                                    <span><strong>L</strong> {{ data.weather.main.temp_min | number:0 }}</span>
+                                    <span><strong>H</strong> {{ data.today.main.temp_max | number:0 }}</span>
+                                    <span><strong>L</strong> {{ data.today.main.temp_min | number:0 }}</span>
                                 </p>
-                                <p>Humidity: {{ data.weather.main.humidity }}%</p>
-                                <p>Wind: {{ data.weather.wind.speed }} m/s</p>
+                                <p>Humidity: {{ data.today.main.humidity }}%</p>
+                                <p>Wind: {{ data.today.wind.speed }} m/s</p>
                             </div>
 
                             <div class="col-xs-4">
-                                <img class="weather-icon pull-right" ng-if="data.weather.icon" ng-attr-src="images/{{ data.weather.icon | climacon }}.svg" alt="">
+                                <img class="weather-icon pull-right" ng-if="data.today.weather.0.icon" ng-attr-src="images/{{ data.today.weather.0.icon | climacon }}.svg" alt="">
                             </div>
                         </div>
 

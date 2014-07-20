@@ -40,7 +40,7 @@ module.exports = function(grunt) {
         concat: { // Task
             dist: { // Target
                 // Compact format
-                src: ['js/directives/*.js', 'js/*.js', 'js/controllers/*.js'],
+                src: ['js/directives/*.js', 'js/*.js', 'js/services/*.js', 'js/controllers/*.js'],
                 dest: 'release/main.js'
             }
         },

@@ -1,70 +1,38 @@
 /**
  * MUST use inline injection notation to prevent uglification breaking the app.
  */
-app.controller('WeatherController', ["$scope", "$http", "$interval", "$location", function ($scope, $http, $interval, $location) {
+angular.module('weatherapp')
+    .controller('WeatherController', ["$scope", "$location", "weatherService", function ($scope, $location, weatherService) {
         'use strict';
-
-        var WEATHER_API  = 'http://api.openweathermap.org/data/2.5/weather?q=';
-        var FORECAST_API = 'http://api.openweathermap.org/data/2.5/forecast/daily?count=7&q=';
 
         $scope.units   = "metric";
         $scope.city    = $location.path().replace(/^\/|\/$/g, '');
-        $scope.options = {types: '(cities)'};
-        $scope.details = "";
         $scope.data    = {};
 
         $scope.resetData = function () {
-            if (angular.isDefined($scope.stop)) {
-                $interval.cancel($scope.stop);
-                $scope.stop = undefined;
-            }
             $scope.data.weather = $scope.data.forecasts = $scope.data.error = undefined;
-            return $scope;
         };
 
         $scope.fetchData = function () {
-            var city = $scope.city;
-
-            if (!city) {
+            if (!$scope.city) {
                 return;
             }
 
-            $location.path('/' + city);
-            $scope.resetData().fetchWeather(city).fetchForecast(city);
-            // $scope.stop = $interval($scope.fetchData, 5000);
-        };
+            $location.path('/' + $scope.city);
 
-        $scope.fetchWeather = function (city) {
-            var url = WEATHER_API + city + '&units=' + $scope.units;
+            $scope.resetData();
 
-            $http
-                .get(url)
-                .success(function (data) {
-                    if (data.cod === "404") {
-                        $scope.data.error = "No data found for " + $scope.city;
-                    } else {
-                        $scope.data.weather = data;
-                        $scope.data.period = (data.dt > data.sys.sunset || data.dt < data.sys.sunrise) ? "night" : "day";
-                        $scope.data.weather.icon = data.weather[0].icon;
-                    }
-                });
+            weatherService.getByCityName($scope.city, $scope.units).then(function (data) {
+                var today     = data[0];
+                var forecasts = data[1];
 
-            return $scope;
-        };
+                $scope.data.today  = today;
+                $scope.data.period = (today.dt > today.sys.sunset || today.dt < today.sys.sunrise) ? "night" : "day";
 
-        $scope.fetchForecast = function (city) {
-            var url = FORECAST_API + city + '&units=' + $scope.units;
 
-            $http
-                .get(url)
-                .success(function (data) {
-                    if (data.cnt) {
-                        data.list.shift();
-                        $scope.data.forecasts = data.list;
-                    }
-                });
-
-            return $scope;
+                forecasts.list.shift();
+                $scope.data.forecasts = forecasts.list;
+            });
         };
 
         $scope.toC = function () {
@@ -77,5 +45,22 @@ app.controller('WeatherController', ["$scope", "$http", "$interval", "$location"
             $scope.fetchData();
         };
 
-        $scope.fetchData();
+        if (!$scope.city && "geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                $scope.coords = position.coords;
+                weatherService.getByGeoCoords($scope.coords, $scope.units).then(function (data) {
+                    var today     = data[0];
+                    var forecasts = data[1];
+
+                    $scope.data.today  = today;
+                    $scope.data.period = (today.dt > today.sys.sunset || today.dt < today.sys.sunrise) ? "night" : "day";
+
+
+                    forecasts.list.shift();
+                    $scope.data.forecasts = forecasts.list;
+                });
+            });
+        } else {
+            $scope.fetchData();
+        }
     }]);
