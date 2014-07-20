@@ -1,5 +1,4 @@
 $primaryColor: #00bd9c;
-
 $dayColor: #f2c500;
 $nightColor: #33485f;
 
@@ -15,7 +14,7 @@ body {
 .weather-wrapper {
     background: $primaryColor;
     padding: 20px 0;
-    height: 100%;
+    min-height: 100%;
     transition: background 0.2s ease;
 
     &.day {
@@ -74,10 +73,18 @@ body {
 
     .day & {
         background: #f59d00;
+
+        &:nth-child(even) {
+            background: darken(#f59d00, 1%);
+        }
     }
 
     .night & {
         background: #2b3e51;
+
+        &:nth-child(even) {
+            background: darken(#2b3e51, 1%);
+        }
     }
 }
 
