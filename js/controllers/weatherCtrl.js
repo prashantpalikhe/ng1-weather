@@ -1,5 +1,5 @@
 /**
- * MUST use inline injection notation to prevent uglification breaking the app.
+ * MUST use inline injection notation to prevent uglification breaking the dependency injection.
  */
 angular.module('weatherapp')
     .controller('WeatherController', ["$scope", "$location", "weatherService", function ($scope, $location, weatherService) {
@@ -7,32 +7,45 @@ angular.module('weatherapp')
 
         $scope.units   = "metric";
         $scope.city    = $location.path().replace(/^\/|\/$/g, '');
+        $scope.coords  = "";
         $scope.data    = {};
+
+        $scope.setData = function (data) {
+            $scope.resetData();
+
+            var today     = data[0];
+            var forecasts = data[1];
+
+            $scope.data.today  = today;
+            $scope.data.period = (today.dt > today.sys.sunset || today.dt < today.sys.sunrise) ? "night" : "day";
+
+            forecasts.list.shift();
+            $scope.data.forecasts = forecasts.list;
+        };
 
         $scope.resetData = function () {
             $scope.data.weather = $scope.data.forecasts = $scope.data.error = undefined;
         };
 
         $scope.fetchData = function () {
-            if (!$scope.city) {
+            var by = "";
+
+            if ($scope.coords) {
+                by = 'getByGeoCoords';
+            }
+
+            // Higher precedence for city, because city is user input.
+            if ($scope.city) {
+                by = 'getByCityName';
+            }
+
+            if (!by) {
                 return;
             }
 
-            $location.path('/' + $scope.city);
+            $scope.city && $location.path('/' + $scope.city);
 
-            $scope.resetData();
-
-            weatherService.getByCityName($scope.city, $scope.units).then(function (data) {
-                var today     = data[0];
-                var forecasts = data[1];
-
-                $scope.data.today  = today;
-                $scope.data.period = (today.dt > today.sys.sunset || today.dt < today.sys.sunrise) ? "night" : "day";
-
-
-                forecasts.list.shift();
-                $scope.data.forecasts = forecasts.list;
-            });
+            weatherService[by]($scope.city, $scope.units).then($scope.setData);
         };
 
         $scope.toC = function () {
@@ -45,20 +58,14 @@ angular.module('weatherapp')
             $scope.fetchData();
         };
 
-        if (!$scope.city && "geolocation" in navigator) {
-            navigator.geolocation.getCurrentPosition(function (position) {
+        /**
+         * If no city provided, display user's local weather.
+         * Uses HTML5 Geo-location API to get user's coordinates.
+         */
+        if (!$scope.city) {
+             ("geolocation" in navigator) && navigator.geolocation.getCurrentPosition(function (position) {
                 $scope.coords = position.coords;
-                weatherService.getByGeoCoords($scope.coords, $scope.units).then(function (data) {
-                    var today     = data[0];
-                    var forecasts = data[1];
-
-                    $scope.data.today  = today;
-                    $scope.data.period = (today.dt > today.sys.sunset || today.dt < today.sys.sunrise) ? "night" : "day";
-
-
-                    forecasts.list.shift();
-                    $scope.data.forecasts = forecasts.list;
-                });
+                $scope.fetchData();
             });
         } else {
             $scope.fetchData();
