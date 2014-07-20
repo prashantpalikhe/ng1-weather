@@ -34,8 +34,8 @@ angular.module('weatherapp')
                 return get([weatherUrl, forecastUrl]);
             },
             getByGeoCoords: function (coords, units) {
-                var weatherUrl  = BASE_URL + 'weather?lat=' + coords.lat + '&lon=' + coords.lon + '&units=' + units;
-                var forecastUrl = BASE_URL + 'forecast/daily?lat=' + coords.lat + '&lon=' + coords.lon + '&units=' + units + '&count=7';
+                var weatherUrl  = BASE_URL + 'weather?lat=' + coords.latitude + '&lon=' + coords.longitude + '&units=' + units;
+                var forecastUrl = BASE_URL + 'forecast/daily?lat=' + coords.latitude + '&lon=' + coords.longitude + '&units=' + units + '&count=7';
 
                 return get([weatherUrl, forecastUrl]);
             }
