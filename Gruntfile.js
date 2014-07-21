@@ -109,7 +109,7 @@ module.exports = function(grunt) {
                     ]
                 },
                 files: [
-                    {src: 'src/index.html', dest: 'index.html'}
+                    {src: 'src/index.html', dest: 'build/index.html'}
                 ]
             }
         }
