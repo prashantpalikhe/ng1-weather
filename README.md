@@ -20,8 +20,10 @@ e.g. [http://weather.prashantpalikhe.com/#/toronto]()
 
 [SASS](http://sass-lang.com/) is used for CSS preprocessing and modularized with [Smacss](http://smacss.com/) approach.
 
-[GruntJS](http://gruntjs.com/) is used for automating building of static assets. It compiles SASS files, concatenates CSS & JS files, minifies them, autoprefixes CSS file and dumps them all in the release directory. So, release directory can be left untouched while developing.
+[GruntJS](http://gruntjs.com/) is used for automating building of static assets. It compiles SASS files, concatenates CSS & JS files, minifies them, autoprefixes CSS file and dumps them all in the build directory. So, you only need to work inside the src directory.
 
 Live reload is also supported via `grunt-watch` grunt task.
 
 Run `grunt watch` before developing and you are good to go.
+
+When ready to deploy, run `grunt build` to bust browser caches.
