@@ -14,7 +14,7 @@ If no city is given, the app tries to load the user's local weather data using H
 
 The app updates the route according to the city entered by the user and is therefore bookmarkable.
 
-e.g. [http://weather.prashantpalikhe.com/#/toronto]()
+e.g. [http://weather.prashantpalikhe.com/#/toronto](http://weather.prashantpalikhe.com/#/toronto)
 
 ### Developers information ###
 
@@ -22,8 +22,10 @@ e.g. [http://weather.prashantpalikhe.com/#/toronto]()
 
 [GruntJS](http://gruntjs.com/) is used for automating building of static assets. It compiles SASS files, concatenates CSS & JS files, minifies them, autoprefixes CSS file and dumps them all in the build directory. So, you only need to work inside the src directory.
 
-Live reload is also supported via `grunt-watch` grunt task.
+To develop further:
 
-Run `grunt watch` before developing and you are good to go.
+1. Run `grunt watch` on the project root.
+2. Modify source code inside `src` directory.
+3. Open `build/index.html` in your browser.
 
-When ready to deploy, run `grunt build` to bust browser caches.
+When you change source code, the browser will reload automatically to reflect your changes.
