@@ -1,7 +1,7 @@
-"use strict";
-
 // Boilerplate stuff, just go with the flow
 module.exports = function(grunt) {
+    'use strict';
+
     // load all grunt tasks matching the `grunt-*` pattern
     // https://github.com/sindresorhus/load-grunt-tasks
     require('load-grunt-tasks')(grunt);
@@ -22,15 +22,22 @@ module.exports = function(grunt) {
                 livereload: true
             },
             scripts: {
-                files: ['js/**/*.js'],
+                files: ['src/assets/js/**/*.js'],
                 tasks: ['concat', 'uglify'],
                 options: {
                     spawn: false
                 }
             },
             css: {
-                files: ['sass/**/*.scss'],
+                files: ['src/assets/sass/**/*.scss'],
                 tasks: ['compass', 'autoprefixer', 'cssmin'],
+                options: {
+                    spawn: false
+                }
+            },
+            html: {
+                files: ['src/index.html'],
+                tasks: ['replace'],
                 options: {
                     spawn: false
                 }
@@ -40,8 +47,8 @@ module.exports = function(grunt) {
         concat: { // Task
             dist: { // Target
                 // Compact format
-                src: ['js/**/*.js'],
-                dest: 'release/main.js'
+                src: ['src/assets/js/**/*.js'],
+                dest: 'build/assets/js/main.js'
             }
         },
 
@@ -55,7 +62,7 @@ module.exports = function(grunt) {
                 // Files object format
                 files: {
                     // files: {dest1: src1, dest2: ['src2']}
-                    'release/main.js': ['release/main.js']
+                    'build/assets/js/main.js': ['build/assets/js/main.js']
                 }
             }
         },
@@ -64,8 +71,8 @@ module.exports = function(grunt) {
             dist: {
                 // Target level options (overrides task level options)
                 options: {
-                    sassDir: 'sass',
-                    cssDir: 'release',
+                    sassDir: 'src/assets/sass',
+                    cssDir: 'build/assets/css',
                     imagesDir: 'images',
                     httpPath: '/'
                 }
@@ -77,8 +84,8 @@ module.exports = function(grunt) {
                 browsers: ['last 2 version']
             },
             single_file: {
-                src: 'release/main.css',
-                dest: 'release/main.css'
+                src: 'build/assets/css/main.css',
+                dest: 'build/assets/css/main.css'
             },
         },
 
@@ -86,7 +93,23 @@ module.exports = function(grunt) {
             dist: {
                 // Files array format
                 files: [
-                    {src: ['release/main.css'], dest: 'release/main.css'}
+                    {src: ['build/assets/css/main.css'], dest: 'build/assets/css/main.css'}
+                ]
+            }
+        },
+
+        replace: {
+            dist: {
+                options: {
+                    patterns: [
+                        {
+                            match: 'timestamp',
+                            replacement: '<%= ((new Date()).valueOf().toString()) + (Math.floor((Math.random()*1000000)+1).toString()) %>'
+                        }
+                    ]
+                },
+                files: [
+                    {src: 'src/index.html', dest: 'index.html'}
                 ]
             }
         }
@@ -95,5 +118,5 @@ module.exports = function(grunt) {
     // Default task
     grunt.registerTask('default', []);
 
-    grunt.registerTask('build', ['concat', 'uglify', 'compass', 'cssmin']);
+    grunt.registerTask('build', ['concat', 'uglify', 'compass', 'cssmin', 'replace']);
 };
