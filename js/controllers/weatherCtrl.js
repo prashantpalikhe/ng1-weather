@@ -24,7 +24,7 @@ angular.module('weatherapp')
         };
 
         $scope.resetData = function () {
-            $scope.data.weather = $scope.data.forecasts = $scope.data.error = undefined;
+            $scope.data.today = $scope.data.forecasts = $scope.data.error = undefined;
         };
 
         $scope.fetchData = function () {
