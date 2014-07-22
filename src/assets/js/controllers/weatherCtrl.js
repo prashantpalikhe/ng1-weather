@@ -2,11 +2,10 @@
  * MUST use inline injection notation to prevent uglification breaking the dependency injection.
  */
 angular.module('weatherapp')
-    .controller('WeatherController', ["$scope", "$location", "weatherService", function ($scope, $location, weatherService) {
+    .controller('WeatherController', ["$scope", "$location", "$routeParams", "weatherService", function ($scope, $location, $routeParams, weatherService) {
         'use strict';
 
         $scope.units   = "metric";
-        $scope.city    = $location.path().replace(/^\/|\/$/g, '');
         $scope.coords  = "";
         $scope.data    = {};
 
@@ -60,16 +59,23 @@ angular.module('weatherapp')
             $scope.fetchData();
         };
 
-        /**
-         * If no city provided, display user's local weather.
-         * Uses HTML5 Geo-location API to get user's coordinates.
-         */
-        if (!$scope.city) {
-             ("geolocation" in navigator) && navigator.geolocation.getCurrentPosition(function (position) {
-                $scope.coords = position.coords;
+        $scope.init = function () {
+            /**
+             * If no city provided, display user's local weather.
+             * Uses HTML5 Geo-location API to get user's coordinates.
+             */
+            if (!$scope.city) {
+                 ("geolocation" in navigator) && navigator.geolocation.getCurrentPosition(function (position) {
+                    $scope.coords = position.coords;
+                    $scope.fetchData();
+                });
+            } else {
                 $scope.fetchData();
-            });
-        } else {
-            $scope.fetchData();
-        }
+            }
+        };
+
+        $scope.$on('$routeChangeSuccess', function () {
+            $scope.city = $routeParams.city || '';
+            $scope.init();
+        });
     }]);
