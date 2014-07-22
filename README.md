@@ -26,6 +26,6 @@ To develop further:
 
 1. Run `grunt watch` on the project root.
 2. Modify source code inside `src` directory.
-3. Open `build/index.html` in your browser.
+3. Symlink to `build/index.html` from your project root and open the link in your browser.
 
 When you change source code, the browser will reload automatically to reflect your changes.
