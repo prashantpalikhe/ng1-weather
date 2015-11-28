@@ -21,7 +21,7 @@
         }
 
         function fetchData () {
-            $scope.data.loaded  = false;
+            $scope.data.loaded = false;
 
             if ($scope.city) {
                 $location.path('/' + $scope.city);
