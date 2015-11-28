@@ -4,9 +4,9 @@ section( class="weather-wrapper {{ data.period }}")
             .col-md-6.text-left
                 | {{ data.today.name}}, {{ data.today.sys.country }}
             .col-md-6.text-right
-                a(href="javascript:void(0)" ng-click="units = 'metric'" ng-class="{active: units=='metric'}") C
+                a(href="javascript:void(0)" ng-click="config.units = 'metric'" ng-class="{active: config.units=='metric'}") C
                 |  |
-                a(href="javascript:void(0)" ng-click="units = 'imperial'" ng-class="{active: units=='imperial'}")  F
+                a(href="javascript:void(0)" ng-click="config.units = 'imperial'" ng-class="{active: config.units=='imperial'}")  F
         form( ng-submit="fetchData()" )
             input.city( type="text" placeholder="Which city are you in?" ng-model="city" required autofocus )
 

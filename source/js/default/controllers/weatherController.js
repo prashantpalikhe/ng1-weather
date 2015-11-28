@@ -4,20 +4,15 @@
     App.controller('WeatherController', WeatherController);
 
     function WeatherController($scope, $location, $routeParams, weatherService) {
-        $scope.units   = "metric";
+        $scope.config = weatherService.config;
 
         $scope.coords  = "";
         $scope.city = $routeParams.city || '';
-        $scope.data    = {
-            loaded    : false,
-            today     : null,
-            forecasts : null,
-            period    : null
-        };
+        $scope.data = {};
 
         $scope.fetchData = fetchData;
 
-        $scope.$watch('units', fetchData);
+        $scope.$watch('config.units', fetchData);
 
         function setData (data) {
             angular.extend($scope.data, data);

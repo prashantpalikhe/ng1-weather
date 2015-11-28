@@ -4,21 +4,26 @@
     App.factory('weatherService', weatherService);
 
     function weatherService($http, $q, OWM_API_URL, OWM_API_KEY) {
-        return {
-            getByCityName: getByCityName,
-            getByGeoCoords: getByGeoCoords
+        var config = {
+            units: 'metric'
         };
 
-        function getByCityName(city, units) {
-            var weatherUrl  = '/weather?q=' + city + '&units=' + units;
-            var forecastUrl = '/forecast/daily/?q=' + city + '&units=' + units + '&count=7';
+        return {
+            config         : config,
+            getByCityName  : getByCityName,
+            getByGeoCoords : getByGeoCoords
+        };
+
+        function getByCityName(city) {
+            var weatherUrl  = '/weather?q=' + city + '&units=' + config.units;
+            var forecastUrl = '/forecast/daily/?q=' + city + '&units=' + config.units + '&count=7';
 
             return get([weatherUrl, forecastUrl]);
         }
 
-        function getByGeoCoords(coords, units) {
-            var weatherUrl  = '/weather?lat=' + coords.latitude + '&lon=' + coords.longitude + '&units=' + units;
-            var forecastUrl = '/forecast/daily?lat=' + coords.latitude + '&lon=' + coords.longitude + '&units=' + units;
+        function getByGeoCoords(coords) {
+            var weatherUrl  = '/weather?lat=' + coords.latitude + '&lon=' + coords.longitude + '&units=' + config.units;
+            var forecastUrl = '/forecast/daily?lat=' + coords.latitude + '&lon=' + coords.longitude + '&units=' + config.units;
 
             return get([weatherUrl, forecastUrl]);
         }
@@ -39,7 +44,7 @@
             });
 
             return $q.all(promises).then(function (data) {
-                var today = data[0];
+                var today     = data[0];
                 var forecasts = data[1].list;
 
                 forecasts.shift();
