@@ -18,14 +18,7 @@ e.g. [http://weather.prashantpalikhe.com/#/toronto](http://weather.prashantpalik
 
 ### Developers information ###
 
-[SASS](http://sass-lang.com/) is used for CSS preprocessing and modularized with [Smacss](http://smacss.com/) approach.
+1. `npm install`
+2. `bower install`
+3. `grunt`
 
-[GruntJS](http://gruntjs.com/) is used for automating building of static assets. It compiles SASS files, concatenates CSS & JS files, minifies them, autoprefixes CSS file and dumps them all in the build directory. So, you only need to work inside the src directory.
-
-To develop further:
-
-1. Run `grunt watch` on the project root.
-2. Modify source code inside `src` directory.
-3. Symlink to `build/index.html` from your project root and open the link in your browser.
-
-When you change source code, the browser will reload automatically to reflect your changes.
