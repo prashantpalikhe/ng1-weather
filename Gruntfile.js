@@ -39,6 +39,7 @@ module.exports = function (grunt) {
         'clean:build',
         'jade:build',
         'cssmin',
+        'ngAnnotate',
         'uglify',
         'imagemin',
         'copy:fonts_build'

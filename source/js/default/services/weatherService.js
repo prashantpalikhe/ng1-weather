@@ -3,8 +3,7 @@
 
     App.factory('weatherService', weatherService);
 
-    function weatherService($http, $q, OWM_API_URL, OWM_API_KEY)
-    {
+    function weatherService($http, $q, OWM_API_URL, OWM_API_KEY) {
         return {
             getByCityName: getByCityName,
             getByGeoCoords: getByGeoCoords

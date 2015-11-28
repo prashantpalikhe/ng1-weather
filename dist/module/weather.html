@@ -1,0 +1,38 @@
+
+<section class="weather-wrapper {{ data.period }}">
+  <div class="weather container">
+    <div ng-show="data.today" class="weather-meta row">
+      <div class="col-md-6 text-left">{{ data.today.name}}, {{ data.today.sys.country }}</div>
+      <div class="col-md-6 text-right"><a href="javascript:void(0)" ng-click="units = 'metric'" ng-class="{active: units=='metric'}">C</a> |<a href="javascript:void(0)" ng-click="units = 'imperial'" ng-class="{active: units=='imperial'}"> F</a></div>
+    </div>
+    <form ng-submit="fetchData()">
+      <input type="text" placeholder="Which city are you in?" ng-model="city" required="required" autofocus="autofocus" class="city"/>
+    </form>
+    <div class="weather-info">
+      <div ng-show="data.today" class="weather-today row">
+        <div class="col-md-4">
+          <p class="now">{{ data.today.main.temp | number:0 }}<span class="deg">°</span></p>
+        </div>
+        <div class="col-md-4"><br/><br/><br/>
+          <p><span><strong>H</strong> {{ data.today.main.temp_max | number:0 }}</span><span><strong> L</strong> {{ data.today.main.temp_min | number:0 }}</span></p>
+          <p>Humidity: {{ data.today.main.humidity }}%</p>
+          <p>Wind: {{ data.today.wind.speed }} m/s</p>
+        </div>
+        <div class="col-md-4">
+          <canvas skycon="" ng-if="data.today.weather[0].icon" icon="data.today.weather[0].icon" width="250" height="250" class="weather-icon"></canvas>
+        </div>
+      </div>
+      <div class="weather-forecast row">
+        <div ng-repeat="forecast in data.forecasts" ng-show="data.forecasts" class="col-md-2">
+          <p>{{ (forecast.dt * 1000) | date:"EEEE" }}</p>
+          <p>
+            <canvas skycon="" icon="forecast.weather[0].icon" width="32" height="32"></canvas>
+          </p><span><strong>H</strong> {{ forecast.temp.max | number:0 }}</span><span><strong> L</strong> {{ forecast.temp.min | number:0 }}</span>
+        </div>
+      </div>
+    </div>
+    <div ng-show="data.error" class="weather-error">
+      <div class="alert alert-danger">{{ data.error }}</div>
+    </div>
+  </div>
+</section>
