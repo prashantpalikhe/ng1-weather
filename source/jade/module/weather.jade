@@ -1,16 +1,17 @@
-section(ng-attr-class='weather-wrapper {{ data.period }}')
+section( class="weather-wrapper {{ data.period }}")
     .weather.container
-        .weather-meta.row(ng-show='data.today')
+        .weather-meta.row(ng-show="data.today")
             .col-md-6.text-left
                 | {{ data.today.name}}, {{ data.today.sys.country }}
             .col-md-6.text-right
-                a(href='javascript:void(0)', ng-click='toC()', ng-class="{active: units=='metric'}") C
+                a(href="javascript:void(0)" ng-click="toC()" ng-class="{active: units=='metric'}") C
                 | |
-                a(href='javascript:void(0)', ng-click='toF()', ng-class="{active: units=='imperial'}") F
+                a(href="javascript:void(0)" ng-click="toF()" ng-class="{active: units=='imperial'}") F
         form(ng-submit='fetchData()')
-            input.city(type='text', placeholder='Which city are you in?', ng-model='city', required='', autofocus='')
+            input.city(type="text" placeholder="Which city are you in?" ng-model="city" required autofocus)
+
         .weather-info
-            .weather-today.row(ng-show='data.today')
+            .weather-today.row(ng-show="data.today")
                 .col-md-4
                     p.now
                         | {{ data.today.main.temp | number:0 }}
@@ -29,18 +30,18 @@ section(ng-attr-class='weather-wrapper {{ data.period }}')
                     p Humidity: {{ data.today.main.humidity }}%
                     p Wind: {{ data.today.wind.speed }} m/s
                 .col-md-4
-                    canvas.weather-icon(skycon='', ng-if='data.today.weather[0].icon', icon='data.today.weather[0].icon', width='250', height='250')
+                    canvas.weather-icon(skycon="" ng-if="data.today.weather[0].icon" icon="data.today.weather[0].icon" width="250" height="250")
             .weather-forecast.row
-                .col-md-2(ng-repeat='forecast in data.forecasts', ng-show='data.forecasts')
+                .col-md-2(ng-repeat="forecast in data.forecasts" ng-show="data.forecasts")
                     p {{ (forecast.dt * 1000) | date:"EEEE" }}
                     p
-                        canvas(skycon='', icon='forecast.weather[0].icon', width='32', height='32')
+                        canvas(skycon="" icon="forecast.weather[0].icon" width="32" height="32")
                     span
                         strong H
                         |  {{ forecast.temp.max | number:0 }}
                     span
                         strong L
                         |  {{ forecast.temp.min | number:0 }}
-        .weather-error(ng-show='data.error')
+        .weather-error(ng-show="data.error")
             .alert.alert-danger
                 | {{ data.error }}
