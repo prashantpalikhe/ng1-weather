@@ -1,8 +1,12 @@
+.weather {
+    position: relative;
+}
+
 .weather-wrapper {
+    transition: $swift-ease-out;
     padding: 20px 0;
     min-height: 100%;
     background: $primaryColor;
-    transition: background 0.2s ease;
 
     &.day {
         background: $dayColor;
@@ -68,7 +72,7 @@
         background: #f59d00;
 
         &:nth-child(even) {
-            background: darken(#f59d00, 1%);
+            background: darken(#f59d00, 2%);
         }
     }
 
@@ -76,11 +80,28 @@
         background: #2b3e51;
 
         &:nth-child(even) {
-            background: darken(#2b3e51, 1%);
+            background: darken(#2b3e51, 2%);
         }
     }
 }
 
 .weather-forecast em {
     font-size: 30px;
+}
+
+
+.weather-bg {
+    @include position(absolute, -5px -5px -5px -5px);
+    @include filter(blur(4px));
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    &:after {
+        @include position(absolute, 0 0 0 0);
+        content: '';
+        display: block;
+        background-color: rgba(black, 0.4);
+    }
 }
