@@ -8,8 +8,14 @@
         $scope.coords  = "";
         $scope.data    = {};
 
-        $scope.setData = function (data) {
-            $scope.resetData();
+        $scope.city = $routeParams.city || '';
+
+        $scope.fetchData = fetchData;
+
+        $scope.$watch('units', fetchData);
+
+        function setData (data) {
+            resetData();
 
             var today     = data[0];
             var forecasts = data[1];
@@ -19,63 +25,28 @@
 
             forecasts.list.shift();
             $scope.data.forecasts = forecasts.list;
-        };
+        }
 
-        $scope.resetData = function () {
+        function resetData () {
             $scope.data.today = $scope.data.forecasts = $scope.data.error = undefined;
-        };
+        }
 
-        $scope.fetchData = function () {
-            var by, param;
+        function fetchData () {
+            console.log('Fetching weather data...');
+
+            if ($scope.city) {
+                $location.path('/' + $scope.city);
+                return weatherService.getByCityName($scope.city, $scope.units).then(setData);
+            }
 
             if ($scope.coords) {
-                by = 'getByGeoCoords';
-                param = $scope.coords;
-            }
-
-            // Higher precedence for city, because city is user input.
-            if ($scope.city) {
-                by = 'getByCityName';
-                param = $scope.city;
-            }
-
-            if (!by) {
-                return;
-            }
-
-            $scope.city && $location.path('/' + $scope.city);
-
-            weatherService[by](param, $scope.units).then($scope.setData);
-        };
-
-        $scope.toC = function () {
-            $scope.units = "metric";
-            $scope.fetchData();
-        };
-
-        $scope.toF = function () {
-            $scope.units = "imperial";
-            $scope.fetchData();
-        };
-
-        $scope.init = function () {
-            /**
-             * If no city provided, display user's local weather.
-             * Uses HTML5 Geo-location API to get user's coordinates.
-             */
-            if (!$scope.city) {
-                ("geolocation" in navigator) && navigator.geolocation.getCurrentPosition(function (position) {
-                    $scope.coords = position.coords;
-                    $scope.fetchData();
-                });
+                return weatherService.getByGeoCoords($scope.coords, $scope.units).then(setData);
             } else {
-                $scope.fetchData();
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    $scope.coords = position.coords;
+                    fetchData();
+                });
             }
-        };
-
-        $scope.$on('$routeChangeSuccess', function () {
-            $scope.city = $routeParams.city || '';
-            $scope.init();
-        });
+        }
     }
 })();

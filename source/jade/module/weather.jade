@@ -4,11 +4,11 @@ section( class="weather-wrapper {{ data.period }}")
             .col-md-6.text-left
                 | {{ data.today.name}}, {{ data.today.sys.country }}
             .col-md-6.text-right
-                a(href="javascript:void(0)" ng-click="toC()" ng-class="{active: units=='metric'}") C
-                | |
-                a(href="javascript:void(0)" ng-click="toF()" ng-class="{active: units=='imperial'}") F
-        form(ng-submit='fetchData()')
-            input.city(type="text" placeholder="Which city are you in?" ng-model="city" required autofocus)
+                a(href="javascript:void(0)" ng-click="units = 'metric'" ng-class="{active: units=='metric'}") C
+                |  |
+                a(href="javascript:void(0)" ng-click="units = 'imperial'" ng-class="{active: units=='imperial'}")  F
+        form( ng-submit="fetchData()" )
+            input.city( type="text" placeholder="Which city are you in?" ng-model="city" required autofocus )
 
         .weather-info
             .weather-today.row(ng-show="data.today")
@@ -25,7 +25,7 @@ section( class="weather-wrapper {{ data.period }}")
                             strong H
                             |  {{ data.today.main.temp_max | number:0 }}
                         span
-                            strong L
+                            strong  L
                             |  {{ data.today.main.temp_min | number:0 }}
                     p Humidity: {{ data.today.main.humidity }}%
                     p Wind: {{ data.today.wind.speed }} m/s
@@ -40,7 +40,7 @@ section( class="weather-wrapper {{ data.period }}")
                         strong H
                         |  {{ forecast.temp.max | number:0 }}
                     span
-                        strong L
+                        strong  L
                         |  {{ forecast.temp.min | number:0 }}
         .weather-error(ng-show="data.error")
             .alert.alert-danger
