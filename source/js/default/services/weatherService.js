@@ -38,7 +38,18 @@
                     });
             });
 
-            return $q.all(promises);
+            return $q.all(promises).then(function (data) {
+                var today = data[0];
+                var forecasts = data[1].list;
+
+                forecasts.shift();
+
+                return {
+                    today     : today,
+                    forecasts : forecasts,
+                    period    : (today.dt > today.sys.sunset || today.dt < today.sys.sunrise) ? "night" : "day"
+                };
+            });
         }
     }
 })();

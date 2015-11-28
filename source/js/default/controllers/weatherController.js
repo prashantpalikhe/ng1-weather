@@ -5,34 +5,28 @@
 
     function WeatherController($scope, $location, $routeParams, weatherService) {
         $scope.units   = "metric";
-        $scope.coords  = "";
-        $scope.data    = {};
 
+        $scope.coords  = "";
         $scope.city = $routeParams.city || '';
+        $scope.data    = {
+            loaded    : false,
+            today     : null,
+            forecasts : null,
+            period    : null
+        };
 
         $scope.fetchData = fetchData;
 
         $scope.$watch('units', fetchData);
 
         function setData (data) {
-            resetData();
+            angular.extend($scope.data, data);
 
-            var today     = data[0];
-            var forecasts = data[1];
-
-            $scope.data.today  = today;
-            $scope.data.period = (today.dt > today.sys.sunset || today.dt < today.sys.sunrise) ? "night" : "day";
-
-            forecasts.list.shift();
-            $scope.data.forecasts = forecasts.list;
-        }
-
-        function resetData () {
-            $scope.data.today = $scope.data.forecasts = $scope.data.error = undefined;
+            $scope.data.loaded = true;
         }
 
         function fetchData () {
-            console.log('Fetching weather data...');
+            $scope.data.loaded  = false;
 
             if ($scope.city) {
                 $location.path('/' + $scope.city);
