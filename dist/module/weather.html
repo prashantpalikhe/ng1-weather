@@ -2,9 +2,11 @@
 <section class="weather-wrapper {{ weatherData.period }}">
   <div ng-class="{'is-ready': photoData.loaded}" ng-if="photoData.url" ng-style="{'background-image': 'url({{ photoData.url }})'}" class="weather-bg"></div>
   <div class="weather container">
-    <div ng-if="weatherData.loaded" class="weather-meta row">
-      <div class="col-md-6 text-left">{{ weatherData.today.name}}, {{ weatherData.today.sys.country }}</div>
-      <div class="col-md-6 text-right"><a href="javascript:void(0)" ng-click="config.units = 'metric'" ng-class="{active: config.units=='metric'}">C</a> |<a href="javascript:void(0)" ng-click="config.units = 'imperial'" ng-class="{active: config.units=='imperial'}"> F</a></div>
+    <div class="weather-meta row">
+      <div class="col-xs-6 text-left">
+        <p ng-if="weatherData.loaded">{{ weatherData.today.name}}, {{ weatherData.today.sys.country }}</p>
+      </div>
+      <div class="col-xs-6 text-right"><a href="javascript:void(0)" ng-click="config.units = 'metric'" ng-class="{active: config.units=='metric'}">C</a> |<a href="javascript:void(0)" ng-click="config.units = 'imperial'" ng-class="{active: config.units=='imperial'}"> F</a></div>
     </div>
     <form ng-submit="fetchData()">
       <input type="text" placeholder="Which city are you in?" ng-model="city" required="required" autofocus="autofocus" class="city"/>

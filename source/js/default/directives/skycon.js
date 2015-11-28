@@ -25,13 +25,17 @@
     };
 
     function skyconDirective() {
-        var skycon = new Skycons({'color': 'white'});
-
         return {
             restrict: 'A',
             link: function (scope, elem, attrs) {
+                var skycon = new Skycons({'color': 'white'});
+
                 skycon.set(elem[0], mapping[scope.$eval(attrs.icon)]);
                 skycon.play();
+
+                scope.$on('$destroy', function () {
+                    skycon.remove(elem[0]);
+                });
             }
         }
     }

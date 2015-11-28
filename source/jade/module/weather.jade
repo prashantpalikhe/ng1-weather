@@ -1,10 +1,10 @@
 section( class="weather-wrapper {{ weatherData.period }}" )
     .weather-bg( ng-class="{'is-ready': photoData.loaded}" ng-if="photoData.url" ng-style="{'background-image': 'url({{ photoData.url }})'}")
     .weather.container
-        .weather-meta.row(ng-if="weatherData.loaded")
-            .col-md-6.text-left
-                | {{ weatherData.today.name}}, {{ weatherData.today.sys.country }}
-            .col-md-6.text-right
+        .weather-meta.row
+            .col-xs-6.text-left
+                p(ng-if="weatherData.loaded") {{ weatherData.today.name}}, {{ weatherData.today.sys.country }}
+            .col-xs-6.text-right
                 a(href="javascript:void(0)" ng-click="config.units = 'metric'" ng-class="{active: config.units=='metric'}") C
                 |  |
                 a(href="javascript:void(0)" ng-click="config.units = 'imperial'" ng-class="{active: config.units=='imperial'}")  F
