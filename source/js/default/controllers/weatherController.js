@@ -1,10 +1,9 @@
-/**
- * MUST use inline injection notation to prevent uglification breaking the dependency injection.
- */
-angular.module('weatherapp')
-    .controller('WeatherController', ["$scope", "$location", "$routeParams", "weatherService", function ($scope, $location, $routeParams, weatherService) {
-        'use strict';
+(function () {
+    'use strict';
 
+    App.controller('WeatherController', WeatherController);
+
+    function WeatherController($scope, $location, $routeParams, weatherService) {
         $scope.units   = "metric";
         $scope.coords  = "";
         $scope.data    = {};
@@ -65,7 +64,7 @@ angular.module('weatherapp')
              * Uses HTML5 Geo-location API to get user's coordinates.
              */
             if (!$scope.city) {
-                 ("geolocation" in navigator) && navigator.geolocation.getCurrentPosition(function (position) {
+                ("geolocation" in navigator) && navigator.geolocation.getCurrentPosition(function (position) {
                     $scope.coords = position.coords;
                     $scope.fetchData();
                 });
@@ -78,4 +77,5 @@ angular.module('weatherapp')
             $scope.city = $routeParams.city || '';
             $scope.init();
         });
-    }]);
+    }
+})();

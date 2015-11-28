@@ -1,0 +1,14 @@
+{
+    "path": {
+        "source": "source",
+        "test": "test",
+        "build": "dist"
+    },
+    "asset": {
+        "css": "asset/css",
+        "font": "asset/font",
+        "image": "asset/image",
+        "js": "asset/js",
+        "icon": "asset/icon"
+    }
+}

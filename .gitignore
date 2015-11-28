@@ -1,2 +1,9 @@
-.sass-cache/
 node_modules
+.sass-cache
+.grunt
+.DS_Store
+.idea
+test
+*.bak
+source/bower
+source/js/lib/bower.js
