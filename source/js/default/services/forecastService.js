@@ -3,7 +3,7 @@
 
     App.factory('forecastService', forecastService);
 
-    function forecastService($http, FI_API_URL, GEOCODING_API_URL) {
+    function forecastService($http, FORECASE_API_URL, GEOCODING_API_URL) {
         var config = {
             units: 'uk'
         };
@@ -25,7 +25,7 @@
 
         function getForecastByCoords(coords, address) {
             return $http
-                .jsonp(FI_API_URL + '/' + coords.lat + ',' + coords.lng + '?units=' + config.units + '&exclude=minutely,hourly,alerts,flags&callback=JSON_CALLBACK')
+                .jsonp(FORECASE_API_URL + '/' + coords.lat + ',' + coords.lng + '?units=' + config.units + '&exclude=minutely,hourly,alerts,flags&callback=JSON_CALLBACK')
                 .then(function (response) {
                     var currentData = response.data.currently;
                     var dailyData = response.data.daily.data;
