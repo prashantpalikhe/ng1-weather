@@ -4,9 +4,9 @@
   <div class="weather container">
     <div class="weather-meta row">
       <div class="col-xs-6 text-left">
-        <p ng-if="weatherData.loaded">{{ weatherData.today.name}}, {{ weatherData.today.sys.country }}</p>
+        <p ng-if="weatherData.loaded">{{ weatherData.address }}</p>
       </div>
-      <div class="col-xs-6 text-right"><a href="javascript:void(0)" ng-click="config.units = 'metric'" ng-class="{active: config.units=='metric'}">C</a> |<a href="javascript:void(0)" ng-click="config.units = 'imperial'" ng-class="{active: config.units=='imperial'}"> F</a></div>
+      <div class="col-xs-6 text-right"><a href="javascript:void(0)" ng-click="config.units = 'uk'" ng-class="{active: config.units=='uk'}">C</a> |<a href="javascript:void(0)" ng-click="config.units = 'us'" ng-class="{active: config.units=='us'}"> F</a></div>
     </div>
     <form ng-submit="fetchData()">
       <input type="text" placeholder="Which city are you in?" ng-model="city" required="required" autofocus="autofocus" class="city"/>
@@ -14,23 +14,23 @@
     <div ng-if="weatherData.loaded" class="weather-info">
       <div class="weather-today row">
         <div class="col-md-4">
-          <p class="now">{{ weatherData.today.main.temp | number:0 }}<span class="deg">°</span></p>
+          <p class="now">{{ weatherData.current.temperature | number:0 }}<span class="deg">°</span></p>
         </div>
         <div class="col-md-4"><br/><br/><br/>
-          <p><span><strong>H</strong> {{ weatherData.today.main.temp_max | number:0 }}</span><span><strong> L</strong> {{ weatherData.today.main.temp_min | number:0 }}</span></p>
-          <p>Humidity: {{ weatherData.today.main.humidity }}%</p>
-          <p>Wind: {{ weatherData.today.wind.speed }} m/s</p>
+          <p><span><strong>H</strong> {{ weatherData.today.temperatureMax | number:0 }}</span><span><strong> L</strong> {{ weatherData.today.temperatureMin | number:0 }}</span></p>
+          <p>Humidity: {{ weatherData.today.humidity }}%</p>
+          <p>Wind: {{ weatherData.today.windSpeed }} m/s</p>
         </div>
         <div class="col-md-4">
-          <canvas skycon="" ng-if="weatherData.today.weather[0].icon" icon="weatherData.today.weather[0].icon" width="250" height="250" class="weather-icon"></canvas>
+          <canvas skycon="skycon" icon="weatherData.today.icon" width="250" height="250" class="weather-icon"></canvas>
         </div>
       </div>
       <div class="weather-forecast row">
         <div ng-repeat="forecast in weatherData.forecasts" ng-show="weatherData.forecasts" class="col-md-2">
-          <p>{{ (forecast.dt * 1000) | date:"EEEE" }}</p>
+          <p>{{ (forecast.time * 1000) | date:"EEEE" }}</p>
           <p>
-            <canvas skycon="" icon="forecast.weather[0].icon" width="32" height="32"></canvas>
-          </p><span><strong>H</strong> {{ forecast.temp.max | number:0 }}</span><span><strong> L</strong> {{ forecast.temp.min | number:0 }}</span>
+            <canvas skycon="skycon" icon="forecast.icon" width="32" height="32"></canvas>
+          </p><span><strong>H</strong> {{ forecast.temperatureMax | number:0 }}</span><span><strong> L</strong> {{ forecast.temperatureMin | number:0 }}</span>
         </div>
       </div>
     </div>
