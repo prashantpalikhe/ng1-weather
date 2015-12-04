@@ -3,8 +3,8 @@
 
     App.controller('WeatherController', WeatherController);
 
-    function WeatherController($scope, $location, $routeParams, weatherService, flickrService) {
-        $scope.config = weatherService.config;
+    function WeatherController($scope, $location, $routeParams, forecastService, flickrService) {
+        $scope.config = forecastService.config;
 
         $scope.coords  = "";
         $scope.city = $routeParams.city || '';
@@ -16,10 +16,12 @@
         $scope.$watch('config.units', fetchData);
 
         function setData (data) {
-            angular.extend($scope.weatherData, data);
+            $scope.weatherData = data;
             $scope.weatherData.loaded = true;
 
-            setPhoto(data.today.coord);
+            setPhoto(data.coords);
+
+            console.log($scope.weatherData);
         }
 
         function setPhoto(coords) {
@@ -35,14 +37,18 @@
 
             if ($scope.city) {
                 $location.path('/' + $scope.city);
-                return weatherService.getByCityName($scope.city, $scope.units).then(setData);
+                return forecastService.getForecastByAddress($scope.city).then(setData);
             }
 
             if ($scope.coords) {
-                return weatherService.getByGeoCoords($scope.coords, $scope.units).then(setData);
+                return forecastService.getForecastByCoords($scope.coords, $scope.units).then(setData);
             } else {
                 navigator.geolocation.getCurrentPosition(function (position) {
-                    $scope.coords = position.coords;
+                    $scope.coords = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+
                     fetchData();
                 });
             }

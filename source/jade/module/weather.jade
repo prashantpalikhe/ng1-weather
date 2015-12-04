@@ -3,11 +3,11 @@ section( class="weather-wrapper {{ weatherData.period }}" )
     .weather.container
         .weather-meta.row
             .col-xs-6.text-left
-                p(ng-if="weatherData.loaded") {{ weatherData.today.name}}, {{ weatherData.today.sys.country }}
+                p(ng-if="weatherData.loaded") {{ weatherData.address }}
             .col-xs-6.text-right
-                a(href="javascript:void(0)" ng-click="config.units = 'metric'" ng-class="{active: config.units=='metric'}") C
+                a(href="javascript:void(0)" ng-click="config.units = 'uk'" ng-class="{active: config.units=='uk'}") C
                 |  |
-                a(href="javascript:void(0)" ng-click="config.units = 'imperial'" ng-class="{active: config.units=='imperial'}")  F
+                a(href="javascript:void(0)" ng-click="config.units = 'us'" ng-class="{active: config.units=='us'}")  F
 
         form( ng-submit="fetchData()" )
             input.city( type="text" placeholder="Which city are you in?" ng-model="city" required autofocus )
@@ -16,7 +16,7 @@ section( class="weather-wrapper {{ weatherData.period }}" )
             .weather-today.row
                 .col-md-4
                     p.now
-                        | {{ weatherData.today.main.temp | number:0 }}
+                        | {{ weatherData.current.temperature | number:0 }}
                         span.deg °
                 .col-md-4
                     br
@@ -25,22 +25,23 @@ section( class="weather-wrapper {{ weatherData.period }}" )
                     p
                         span
                             strong H
-                            |  {{ weatherData.today.main.temp_max | number:0 }}
+                            |  {{ weatherData.today.temperatureMax | number:0 }}
                         span
                             strong  L
-                            |  {{ weatherData.today.main.temp_min | number:0 }}
-                    p Humidity: {{ weatherData.today.main.humidity }}%
-                    p Wind: {{ weatherData.today.wind.speed }} m/s
+                            |  {{ weatherData.today.temperatureMin | number:0 }}
+                    p Humidity: {{ weatherData.today.humidity }}%
+                    p Wind: {{ weatherData.today.windSpeed }} m/s
                 .col-md-4
-                    canvas.weather-icon(skycon="" ng-if="weatherData.today.weather[0].icon" icon="weatherData.today.weather[0].icon" width="250" height="250")
+                    canvas.weather-icon(skycon icon="weatherData.today.icon" width="250" height="250")
+
             .weather-forecast.row
                 .col-md-2(ng-repeat="forecast in weatherData.forecasts" ng-show="weatherData.forecasts")
-                    p {{ (forecast.dt * 1000) | date:"EEEE" }}
+                    p {{ (forecast.time * 1000) | date:"EEEE" }}
                     p
-                        canvas(skycon="" icon="forecast.weather[0].icon" width="32" height="32")
+                        canvas(skycon icon="forecast.icon" width="32" height="32")
                     span
                         strong H
-                        |  {{ forecast.temp.max | number:0 }}
+                        |  {{ forecast.temperatureMax | number:0 }}
                     span
                         strong  L
-                        |  {{ forecast.temp.min | number:0 }}
+                        |  {{ forecast.temperatureMin | number:0 }}

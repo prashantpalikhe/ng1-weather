@@ -11,7 +11,14 @@
         };
 
         function searchPhoto(coords) {
-            var normalizedCoords = coords.lat + ''.replace('.', '') + coords.lon + ''.replace('.', '');
+            var normalizedCoords;
+
+            coords = {
+                lat: coords.lat,
+                lon: coords.lng
+            };
+
+            normalizedCoords = coords.lat + ''.replace('.', '') + coords.lng + ''.replace('.', '');
 
             if (cache[normalizedCoords]) {
                 return $q.when(cache[normalizedCoords], getPhotoUrl);
