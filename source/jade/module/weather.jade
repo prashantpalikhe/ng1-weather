@@ -32,10 +32,10 @@ section( class="weather-wrapper {{ weatherData.period }}" )
                     p Humidity: {{ weatherData.today.humidity }}%
                     p Wind: {{ weatherData.today.windSpeed }} m/s
                 .col-md-4
-                    canvas.weather-icon(skycon icon="weatherData.today.icon" width="250" height="250")
+                    canvas.weather-icon( skycon icon="weatherData.today.icon" width="250" height="250" )
 
             .weather-forecast.row
-                .col-md-2(ng-repeat="forecast in weatherData.forecasts" ng-show="weatherData.forecasts")
+                .col-md-2( ng-repeat="forecast in weatherData.forecasts" ng-show="weatherData.forecasts" )
                     p {{ (forecast.time * 1000) | date:"EEEE" }}
                     p
                         canvas(skycon icon="forecast.icon" width="32" height="32")

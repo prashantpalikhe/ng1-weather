@@ -1,8 +1,8 @@
 ## AngularWeather ##
 
-**AngularWeather** is a simple weather app built on [angularJS](https://angularjs.org/). It consumes [OpenWeatherMap](http://openweathermap.org/) API for all weather related data.
+**AngularWeather** is a simple weather app built on [angularJS](https://angularjs.org/). It consumes [Forecast.io](https://developer.forecast.io/) API for all weather related data.
 
-[DEMO](http://weather.prashantpalikhe.com)
+[DEMO](https://weather.prashantpalikhe.com)
 
 ### App information ###
 
@@ -14,7 +14,7 @@ If no city is given, the app tries to load the user's local weather data using H
 
 The app updates the route according to the city entered by the user and is therefore bookmarkable.
 
-e.g. [http://weather.prashantpalikhe.com/#/toronto](http://weather.prashantpalikhe.com/#/toronto)
+e.g. [http://weather.prashantpalikhe.com/#/toronto](https://weather.prashantpalikhe.com/#/toronto)
 
 ### Developers information ###
 

@@ -27,6 +27,7 @@
             return $http
                 .jsonp(FI_API_URL + '/' + coords.lat + ',' + coords.lng + '?units=' + config.units + '&exclude=minutely,hourly,alerts,flags&callback=JSON_CALLBACK')
                 .then(function (response) {
+                    var currentData = response.data.currently;
                     var dailyData = response.data.daily.data;
                     var today = dailyData.shift();
 
@@ -34,10 +35,11 @@
 
                     return {
                         coords    : coords,
-                        current   : response.data.currently,
+                        address   : address,
+                        current   : currentData,
                         today     : today,
                         forecasts : dailyData,
-                        address   : address
+                        period    : (currentData.time > today.sunsetTime || currentData.time < today.sunriseTime) ? "night" : "day"
                     };
                 });
 
