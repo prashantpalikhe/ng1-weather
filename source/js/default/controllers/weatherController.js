@@ -11,7 +11,7 @@
         vm.config = forecastService.config;
 
         vm.city = $routeParams.city || '';
-        vm.weatherData = {};
+        vm.weatherData = null;
         vm.photoUrl = '';
 
         vm.fetchData = fetchData;
@@ -22,7 +22,6 @@
 
         function setData (data) {
             vm.weatherData = data;
-            vm.weatherData.loaded = true;
 
             setPhoto(data.coords);
         }
@@ -34,7 +33,7 @@
         }
 
         function fetchData (coords) {
-            vm.weatherData.loaded = false;
+            vm.weatherData = null;
             vm.photoUrl = '';
 
             if (vm.city) {

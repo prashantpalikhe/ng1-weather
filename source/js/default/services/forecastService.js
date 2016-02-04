@@ -24,25 +24,31 @@
         }
 
         function getForecastByCoords(coords, address) {
-            return $http
-                .jsonp(FORECASE_API_URL + '/' + coords.lat + ',' + coords.lng + '?units=' + config.units + '&exclude=minutely,hourly,alerts,flags&callback=JSON_CALLBACK')
-                .then(function (response) {
-                    var currentData = response.data.currently;
-                    var dailyData = response.data.daily.data;
-                    var today = dailyData.shift();
+            return $http.jsonp(
+                FORECASE_API_URL + '/' + coords.lat + ',' + coords.lng,
+                {
+                    params: {
+                        units    : config.units,
+                        exclude  : 'minutely,hourly,alerts,flags',
+                        callback : 'JSON_CALLBACK'
+                    }
+                }
+            ).then(function (response) {
+                var currentData = response.data.currently;
+                var dailyData = response.data.daily.data;
+                var today = dailyData.shift();
 
-                    dailyData.pop();
+                dailyData.pop();
 
-                    return {
-                        coords    : coords,
-                        address   : address,
-                        current   : currentData,
-                        today     : today,
-                        forecasts : dailyData,
-                        period    : (currentData.time > today.sunsetTime || currentData.time < today.sunriseTime) ? "night" : "day"
-                    };
-                });
-
+                return {
+                    coords    : coords,
+                    address   : address,
+                    current   : currentData,
+                    today     : today,
+                    forecasts : dailyData,
+                    period    : (currentData.time > today.sunsetTime || currentData.time < today.sunriseTime) ? "night" : "day"
+                };
+            });
         }
 
         function getGeoCodeForAddress(address) {

@@ -4,7 +4,7 @@ section( class="weather-wrapper {{ weatherVm.weatherData.period }}" )
     .weather.container
         .weather-meta.row
             .col-xs-6.text-left
-                p(ng-if="weatherVm.weatherData.loaded") {{ weatherVm.weatherData.address }}
+                p(ng-if="weatherVm.weatherData") {{ weatherVm.weatherData.address }}
             .col-xs-6.text-right
                 a(href="javascript:void(0)" ng-click="weatherVm.config.units = 'uk'" ng-class="{active: weatherVm.config.units=='uk'}") C
                 |  |
@@ -13,7 +13,7 @@ section( class="weather-wrapper {{ weatherVm.weatherData.period }}" )
         form( ng-submit="weatherVm.fetchData()" )
             input.city( type="text" placeholder="Which city are you in?" ng-model="weatherVm.city" required autofocus )
 
-        .weather-info( ng-if="weatherVm.weatherData.loaded" )
+        .weather-info( ng-if="weatherVm.weatherData" )
             .weather-today.row
                 .col-md-4
                     p.now

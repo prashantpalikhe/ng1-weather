@@ -3,7 +3,7 @@
 
     App.factory('flickrService', flickrService);
 
-    function flickrService($http, $q, $httpParamSerializer, FLICKR_API_URL, FLICKR_API_KEY) {
+    function flickrService($http, $q, FLICKR_API_URL, FLICKR_API_KEY) {
         var cache = {};
 
         return {
@@ -39,7 +39,17 @@
         }
 
         function get(method, params) {
-            return $http.get(FLICKR_API_URL + '/?method=' + method + '&api_key=' + FLICKR_API_KEY + '&format=json&&nojsoncallback=1&' + $httpParamSerializer(params));
+            return $http.get(
+                FLICKR_API_URL,
+                {
+                    params: angular.extend({
+                        method: method,
+                        api_key: FLICKR_API_KEY,
+                        format: 'json',
+                        nojsoncallback: 1
+                    }, params)
+                }
+            );
         }
     }
 })();
