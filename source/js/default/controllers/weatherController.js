@@ -1,56 +1,51 @@
 (function () {
     'use strict';
 
-    App.controller('WeatherController', WeatherController);
+    angular
+        .module('weatherapp')
+        .controller('WeatherController', WeatherController);
 
-    function WeatherController($scope, $location, $routeParams, forecastService, flickrService) {
-        $scope.config = forecastService.config;
+    function WeatherController($scope, $location, $routeParams, geoLocator, forecastService, flickrService) {
+        var vm = this;
 
-        $scope.coords  = "";
-        $scope.city = $routeParams.city || '';
-        $scope.weatherData = {};
-        $scope.photoData = {};
+        vm.config = forecastService.config;
 
-        $scope.fetchData = fetchData;
+        vm.city = $routeParams.city || '';
+        vm.weatherData = {};
+        vm.photoUrl = '';
 
-        $scope.$watch('config.units', fetchData);
+        vm.fetchData = fetchData;
+
+        $scope.$watch('weatherVm.config.units', function () {
+            fetchData();
+        });
 
         function setData (data) {
-            $scope.weatherData = data;
-            $scope.weatherData.loaded = true;
+            vm.weatherData = data;
+            vm.weatherData.loaded = true;
 
             setPhoto(data.coords);
-
-            console.log($scope.weatherData);
         }
 
         function setPhoto(coords) {
             flickrService.searchPhoto(coords).then(function (photoUrl) {
-                $scope.photoData.url = photoUrl;
-                $scope.photoData.loaded = true;
+                vm.photoUrl = photoUrl;
             });
         }
 
-        function fetchData () {
-            $scope.weatherData.loaded = false;
-            $scope.photoData.loaded = false;
+        function fetchData (coords) {
+            vm.weatherData.loaded = false;
+            vm.photoUrl = '';
 
-            if ($scope.city) {
-                $location.path('/' + $scope.city);
-                return forecastService.getForecastByAddress($scope.city).then(setData);
+            if (vm.city) {
+                $location.path('/' + vm.city);
+                return forecastService.getForecastByAddress(vm.city).then(setData);
             }
 
-            if ($scope.coords) {
-                return forecastService.getForecastByCoords($scope.coords, $scope.units).then(setData);
+            if (coords) {
+                return forecastService.getForecastByCoords(coords, $scope.units).then(setData);
             } else {
-                navigator.geolocation.getCurrentPosition(function (position) {
-                    $scope.coords = {
-                        lat: position.coords.latitude,
-                        lng: position.coords.longitude
-                    };
-
-                    fetchData();
-                });
+                geoLocator.getCurrentCoords().then(fetchData);
             }
         }
     }

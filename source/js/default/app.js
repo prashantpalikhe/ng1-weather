@@ -8,7 +8,7 @@
 
             $routeProvider
                 .when('/:city?', {
-                    controller: 'WeatherController',
+                    controller: 'WeatherController as weatherVm',
                     templateUrl: 'module/weather.html'
                 })
                 .otherwise({
